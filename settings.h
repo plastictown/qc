@@ -16,7 +16,6 @@ namespace pt = boost::property_tree;
 namespace md
 {
 
-
   class Settings : public boost::noncopyable
   {
   public:
@@ -46,8 +45,6 @@ namespace md
     // expected in cwd
     static constexpr const char* const settingsFilePath = "data/settings.json";
   };
-
-
 
 } // namespace md
 
