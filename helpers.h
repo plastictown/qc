@@ -8,7 +8,7 @@ namespace md
 {
   struct Rgb
   {
-    int r, g, b;
+    unsigned char r, g, b;
   };
 
   struct FixedBox

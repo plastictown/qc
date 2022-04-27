@@ -3,6 +3,8 @@
 
 namespace md
 {
+  // -- Fixed Bar -- //
+
   FixedBarComponent::FixedBarComponent()
     :rawData{}
   {};
@@ -40,7 +42,7 @@ namespace md
       ));
   }
 
-  // ----------------------------------------------------------------------- //
+  // -- Line -- //
 
   void LineComponent::SetColour(const juce::Colour& c)
   {

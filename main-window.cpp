@@ -5,6 +5,8 @@ MainWindow::MainWindow(const juce::String& name)
 {
   static constexpr const int mainWindowDefaultWidth = 500;
   static constexpr const int mainWindowDefaultHeight = 830;
+  animationTickIntervalMs = md::Settings::GetValue<unsigned>("Animation.tickIntervalMs",
+    animationTickIntervalMs);
 
   const auto backgroundColor = md::Settings::GetRgbFromPath("MainWindow.BackgroundColour");
   backgroundLayout = {
@@ -85,7 +87,7 @@ void MainWindow::buttonClicked(juce::Button* b)
     if (notificationWindow) {
       delete notificationWindow;
     }
-    notificationWindow = new NotificationWindow{ "Notification" }; // todo: from config
+    notificationWindow = new NotificationWindow{"Notification", animationTickIntervalMs}; // todo: from config
     addAndMakeVisible(*notificationWindow);
     notificationWindow->setBounds(50, 526, 300, 200); // todo: from config
     notificationWindow->setVisible(true);

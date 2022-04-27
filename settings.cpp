@@ -30,9 +30,9 @@ namespace md
   Rgb Settings::GetRgbFromPath(const std::string& path)
   {
     return Rgb{
-      GetValue(path + ".r", 0),
-      GetValue(path + ".g", 0),
-      GetValue(path + ".b", 0)
+      GetValue<unsigned char>(path + ".r", 0),
+      GetValue<unsigned char>(path + ".g", 0),
+      GetValue<unsigned char>(path + ".b", 0)
     };
   }
 

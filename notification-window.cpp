@@ -1,8 +1,9 @@
 #include "notification-window.h"
+#include "settings.h"
 
 NotificationWindow::NotificationWindow(const juce::String& name, unsigned tickIntervalMs)
   : juce::DocumentWindow(name, juce::Colours::lightgrey, false),
-  tickInterval{ tickIntervalMs }
+  tickInterval{tickIntervalMs} // use default
 {
   setBackgroundColour(juce::Colour::fromRGB(25, 32, 45)); // todo: from config
   setUsingNativeTitleBar(false);
@@ -31,6 +32,10 @@ NotificationWindow::NotificationWindow(const juce::String& name, unsigned tickIn
       }
     }
   );
+
+  // from config or default
+  disappearTimeMs = md::Settings::GetValue<unsigned>("Animation.disappearTimeMs", disappearTimeMs);
+
 }
 
 NotificationWindow::~NotificationWindow()
@@ -50,14 +55,18 @@ void NotificationWindow::tick() // for animation
     if (newAlpha <= 0.0f || newAlpha >= 1.0f)
     {
       alphaAnimationDelta = 0.0f; // stop animation
+      xAnimationDelta = 0.0f;
+      yAnimationDelta = 0.0f;
     }
     setAlpha(newAlpha);
+    const auto bounds = getBounds().toFloat();
+    setBounds(bounds.withLeft(bounds.getX() + xAnimationDelta).withTop(bounds.getY() + yAnimationDelta).toNearestInt());
   }
 }
 
 void NotificationWindow::closeButtonPressed()
 {
-  disappear(500); // todo: from config
+  disappear(disappearTimeMs); // todo: from config
 }
 
 void NotificationWindow::buttonClicked(juce::Button*)
@@ -73,5 +82,10 @@ void NotificationWindow::disappear(const unsigned milliseconds)
     setAlpha(0.0f);
     return;
   }
+  const auto currentRect = getBounds();
+  const float widthDecrease = currentRect.getWidth() -(currentRect.getWidth() * decreaseSizeAspect);
+  const float heightDecrease = currentRect.getHeight() - (currentRect.getHeight() * decreaseSizeAspect);
+  xAnimationDelta = widthDecrease / nTicks;
+  yAnimationDelta = heightDecrease / nTicks;
   alphaAnimationDelta = -(getAlpha() / static_cast<float>(nTicks));
 }

@@ -12,7 +12,7 @@
 class NotificationWindow : public juce::DocumentWindow, public juce::Button::Listener
 {
 public:
-  NotificationWindow(const juce::String& name, unsigned tickIntervalMs = 20u);
+  NotificationWindow(const juce::String& name, unsigned tickIntervalMs = 20u /*50 fps*/);
   ~NotificationWindow();
   void tick(); // for animation
   void closeButtonPressed() override;
@@ -22,9 +22,13 @@ public:
 private:
   std::unique_ptr<std::thread> tickThread = nullptr;
   std::atomic<bool> m_stopTickThread = false;
+  unsigned disappearTimeMs = 500u;
   // must: guard for these values or make it atomic too
   unsigned tickInterval = 20u;
   float alphaAnimationDelta = 0.0f;
+  float xAnimationDelta;
+  float yAnimationDelta;
+  float decreaseSizeAspect = 0.5f;
   juce::Component::SafePointer<juce::Label> label;
 };
 

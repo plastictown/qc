@@ -28,6 +28,7 @@ private:
   md::Image logoImage;
   // todo: make queue of NotificationWindows
   DocumentWindow::SafePointer<NotificationWindow> notificationWindow;
+  unsigned animationTickIntervalMs = 20u; // 50 fps
 };
 
 #endif // !__MAIN_WINDOW_H__
