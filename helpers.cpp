@@ -15,14 +15,14 @@ namespace md
 
   bool Image::LoadImage(const std::string& path)
   {
-    const std::string imagePath = md::Settings::GetResourcePathByFilename(
+    const std::wstring imagePath = md::Settings::GetResourceWPathByFilename(
       md::Settings::GetStringFromPath(path + ".filename"));
 
     if (imagePath.empty())
     {
       return false;
     }
-    image = juce::ImageFileFormat::loadFrom(juce::File::File(imagePath));
+    image = juce::ImageFileFormat::loadFrom(juce::File::File(juce::CharPointer_UTF16(imagePath.c_str())));
     if (!image.isValid())
     {
       return false;

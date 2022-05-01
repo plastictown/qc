@@ -70,6 +70,17 @@ namespace md
     return resourcePath.string();
   }
 
+  std::wstring Settings::GetResourceWPathByFilename(const std::string& filename)
+  {
+    const fs::path resourcePath = fs::current_path() / "data" / filename;
+    if (!fs::exists(resourcePath))
+    {
+      // log << message
+      return std::wstring{};
+    }
+    return resourcePath.wstring();
+  }
+
   Line Settings::GetLineByPath(const std::string& path)
   {
     return Line{

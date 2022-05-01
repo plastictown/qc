@@ -25,6 +25,7 @@ namespace md
     static FixedBar GetFixedBarFromPath(const std::string& path);
     static std::string GetStringFromPath(const std::string& path);
     static std::string GetResourcePathByFilename(const std::string& filename);
+    static std::wstring GetResourceWPathByFilename(const std::string& filename);
     static Line GetLineByPath(const std::string& path);
     template<typename T>
     static T GetValue(const std::string& valuePath, const T& defaultValue)
